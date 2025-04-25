@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="website icon" type="png"
+	href = "user.jpg">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Maintenance Chatbot</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body,
+   
+
+    .video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      object-fit: cover;
+      filter: brightness(0.6);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: -1;
+    }
+
+    header {
+      text-align: center;
+      color: #00ffff;
+      padding: 2rem 1rem;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      color: #fff;
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    .container h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #00ffff;
+      text-shadow: 0 0 8px #0ff;
+    }
+
+    .container p {
+      max-width: 900px;
+      margin-bottom: 2rem;
+      text-align: center;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    .flex-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .content {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #00ffff;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 0 25px #00ffffaa;
+      min-width: 280px;
+      max-width: 350px;
+      flex: 1 1 300px;
+      color: #fff;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .content:hover {
+      transform: translateY(-5px);
+      background: rgba(0, 0, 40, 0.7);
+    }
+
+
+    .chatbot-btn {
+        position: fixed;
+        top: 20px; /* Move the button to the top */
+        right: 20px;
+        padding: 15px 25px;
+        background-color: black; /* Set the background to black */
+        color: white; /* Set the text color to white */
+        border: 3px solid #ff00ff; /* Glowing pink border */
+        border-radius: 10px; /* Round the corners */
+        font-size: 1.2rem; /* Slightly larger text */
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 9999;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 25px rgba(255, 0, 255, 0.7);
+        animation: border-glow 3s infinite linear; /* Glowing animation */
+        display: flex;
+        align-items: center;
+      }
+      
+      .chatbot-btn:hover {
+        background-color: #ff00ff; /* Bright and striking pinkish-purple */
+        color: #fff; /* Ensure text is white */
+        box-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6); /* Stronger glowing effect */
+        border-color: #ff00ff; /* Glowing pinkish-purple border */
+        transform: scale(1.1); /* Slightly enlarge the button */
+      }
+      
+      
+      .chatbot-btn:active {
+        transform: scale(0.95);
+      }
+      
+      .chatbot-img {
+        width: 30px;  /* Adjust size */
+        height: 30px; /* Adjust size */
+        margin-right: 10px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #fff;
+      }
+      
+      .chatbot-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      
+      /* Circular Glow Animation for the border */
+      @keyframes border-glow {
+        0% {
+          border-color: rgba(255, 0, 0, 0.8); /* Red */
+          box-shadow: 0 0 15px rgba(255, 0, 0, 0.8); /* Red glow */
+        }
+        25% {
+          border-color: rgba(0, 0, 255, 0.8); /* Blue */
+          box-shadow: 0 0 15px rgba(0, 0, 255, 0.8); /* Blue glow */
+        }
+        50% {
+          border-color: rgba(0, 255, 0, 0.8); /* Green */
+          box-shadow: 0 0 15px rgba(0, 255, 0, 0.8); /* Green glow */
+        }
+        75% {
+          border-color: rgba(255, 0, 255, 0.8); /* Pink */
+          box-shadow: 0 0 15px rgba(255, 0, 255, 0.8); /* Pink glow */
+        }
+        100% {
+          border-color: rgba(255, 255, 0, 0.8); /* Yellow */
+          box-shadow: 0 0 15px rgba(255, 255, 0, 0.8); /* Yellow glow */
+        }
+      }
+      
+      
+    footer {
+      text-align: center;
+      color: #0ff;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .container h2 {
+        font-size: 1.5rem;
+      }
+
+      .flex-section {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    .login-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        background-color: #000;
+        color: #fff;
+        border: 3px solid #00ffff;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 9999;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.7), 0 0 25px rgba(0, 255, 255, 0.6);
+      }
+      
+      .login-btn:hover {
+        background-color: #00ffff;
+        color: #000;
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.9);
+      }
+      
+      .login-btn:active {
+        transform: scale(0.95);
+      }
+      
+  </style>
+</head>
+
+<body>
+    
+    <video class="video-bg" autoplay muted loop>
+        <source src="52743-470449536.mp4" type="video/mp4">
+        
+
+    </video>
+    <div class="overlay"></div>
+    <a href="login.html">
+          <button class="login-btn">Login</button>
+        </a>
+        
+  <header>
+    <h1>Welcome to Manny!</h1>
+    <p>Your Smart Home Maintenance Assistant</p>
+  </header>
+
+  <div class="container">
+    <h2>Need Help With Home Repairs?</h2>
+    <p>
+      Ask me anything about fixing appliances, scheduling a plumber, getting cleaning tips,
+      or just figuring out your next DIY project. I'm here 24/7 to keep your home in shape.
+    </p>
+
+    <div class="flex-section">
+      <div class="content">
+        <h3>🔧 Common Topics</h3>
+        <h4>📅 Monthly Checklist</h4>
+        <ul>
+          <li>Clean HVAC filters</li>
+          <li>Check smoke and CO detectors</li>
+          <li>Inspect faucets and pipes</li>
+          <li>Clean kitchen hood vents</li>
+        </ul>
+        <h4>🌞 Summer Tips</h4>
+        <ul>
+          <li>Service AC</li>
+          <li>Check insulation</li>
+          <li>Seal windows/doors</li>
+        </ul>
+        <h4>❄️ Winter Tips</h4>
+        <ul>
+          <li>Insulate pipes</li>
+          <li>Check heater</li>
+          <li>Inspect chimney</li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <h3>🧺 Appliance Guides</h3>
+        <ul>
+          <li>Washing machine smells?</li>
+          <li>Fridge not cooling?</li>
+          <li>Dishwasher care</li>
+        </ul>
+        <h3>🛠️ DIY Tutorials</h3>
+        <ul>
+          <li>Fix a leaky faucet</li>
+          <li>Unclog a drain</li>
+          <li>Paint like a pro</li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <h3>🧰 Tools & Widgets</h3>
+        <ul>
+          <li><strong>Troubleshooter:</strong> “Why is my light flickering?”</li>
+          <li><strong>Scheduler:</strong> Get maintenance reminders</li>
+          <li><strong>Cost Estimator:</strong> Repair cost insights</li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <h3>🏡 More Sections</h3>
+        <ul>
+          <li><strong>Quick Fixes</strong> with chatbot</li>
+          <li><strong>Safety Tips</strong> for fire/electricity</li>
+          <li><strong>Green Ideas</strong> to save resources</li>
+          <li><strong>Tools Guide</strong> for every level</li>
+          <li><strong>Hire Help</strong> via chatbot form</li>
+          <li><strong>FAQ</strong>: sealing cracks, etc.</li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <h3>📲 Chatbot Interaction Tips</h3>
+        <ul>
+          <li><strong>Be specific:</strong> “My living room light flickers every few minutes.”</li>
+          <li><strong>Use keywords:</strong> like "leak", "repair", "filter"</li>
+          <li><strong>Follow up:</strong> Rephrase for better results</li>
+          <li><strong>Ask reminders:</strong> Monthly maintenance alerts</li>
+        </ul>
+      </div>
+    </div>
+  </div>    
+
+  <!-- Floating Chatbot Button -->
+  <button class="chatbot-btn" onclick="window.location.href='bot.html'">
+    <div class="chatbot-img">
+        <img src="user.jpg" alt="Chat Icon">
+    </div>
+      Chat with Manny..
+</button>
+
+
+  
+  
+
+  <footer>
+    &copy; 2025 Manny. All rights reserved.
+  </footer>
+</body>
+
+</html>
